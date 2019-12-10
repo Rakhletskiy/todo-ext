@@ -1,0 +1,70 @@
+@import '../../vars'
+  
+.auth
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  &__title
+    margin-bottom: 40px
+    text-align: center
+    color: $text-color
+    legend
+      font-size: 35px
+      font-weight: bold
+      margin-bottom: 5px
+      justify-self: start
+      letter-spacing: 1px
+    span
+      font-size: 18px
+  &__actions
+    border: 0
+    padding: 25px 40px 35px
+    margin: 0
+    min-width: 0
+    box-shadow: 0px 0px 20px -1px rgba($main-color, .2)
+    display: flex
+    justify-content: center
+    label
+      display: flex
+      flex-direction: column
+      margin-bottom: 25px
+      span
+        letter-spacing: 1px
+        color: $text-color
+        font-weight: bold
+      input
+        width: 300px
+        padding: 10px 10px
+        margin-top: 5px
+        color: $text-color
+        border: 1px solid rgba($accent-color, .5)
+        &::placeholder
+          font-size: 15px
+          color: rgba(0,0,0,.4)
+    &-submit-btn
+      background-color: $main-color
+      padding: 10px 35px
+      margin: 30px auto 0
+      color: #fff
+      text-transform: uppercase
+      font-weight: bold
+      cursor: pointer
+      transition: .25s ease
+      &:hover
+        background-color: $accent-color
+        transition: .25s ease
+    &-switch-btn
+      padding: 10px 10px 0
+      width: auto
+      margin: 0 auto
+      background-color: transparent
+      text-align: center
+      color: rgba(0,0,0,.5)
+      font-size: 14px
+      cursor: pointer
+      outline: none
+      transition: .25s ease
+      &:hover
+        text-decoration: underline
+        transition: .25s ease
