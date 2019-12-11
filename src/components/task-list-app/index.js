@@ -1,18 +1,18 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { connect } from 'react-redux';
+
 
 import './task-list-app.sass';
 
 import Auth from '../../modules/auth';
 import TaskList from '../../modules/task-list';
 
-const TaskListApp = () => {
-  return ( 
-    <div className="task-list-app">
-      <Auth />
-      <TaskList />
+const TaskListApp = props => {
+  return (
+    <div className='task-list-app'>
+      {props.isAuth ? <TaskList /> : <Auth />}
     </div>
-   );
-}
- 
-export default TaskListApp;
+  );
+};
+
+export default connect(state => ({isAuth: state.auth.isAuth}))(TaskListApp);

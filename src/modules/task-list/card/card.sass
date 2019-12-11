@@ -1,0 +1,60 @@
+@import '../../../vars'
+
+.task-list__tasks-item
+      list-style-type: none
+      border-bottom: 1px solid rgba($main-color, .1)
+      padding: 5px 80px 5px 5px 
+      margin-top: 20px
+      font-weight: bold
+      color: rgba($text-color, .8)
+      font-size: 20px
+      word-wrap: break-word
+      position: relative
+      &-edit-block
+        display: flex
+        align-items: center
+        width: 100%
+        input
+          flex: 0.85
+          color: rgba($text-color, .8)
+          font-size: 20px
+          font-weight: bold
+          outline: none
+          padding: 0px 10px
+          outline: 1px solid rgba($main-color, .6)
+        button
+          flex: 0.15
+          background-color: $main-color
+          font-weight: bold
+          color: #fff
+          font-size: 14px
+          height: 30px
+          margin-left: 10px
+          cursor: pointer
+          transition: .3s ease
+          &:hover
+            background-color: $accent-color
+            transition: .3s ease
+
+      &-del-btn
+        position: absolute
+        right: 5px
+        top: 50%
+        transform: translateY(-50%)
+        color: lighten($error-color, 10%)
+        cursor: pointer
+        transition: .3s ease
+        &:hover
+          color: $error-color
+          transition: .3s ease
+      &-edit-btn
+        position: absolute
+        right: 35px
+        top: 50%
+        transform: translateY(-50%)
+        color: $text-color
+        cursor: pointer
+        transition: .3s ease
+        &:hover
+          color: lighten($text-color, 20%)
+          transition: .3s ease
