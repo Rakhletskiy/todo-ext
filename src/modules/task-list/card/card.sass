@@ -35,7 +35,6 @@
           &:hover
             background-color: $accent-color
             transition: .3s ease
-
       &-del-btn
         position: absolute
         right: 5px
@@ -50,6 +49,17 @@
       &-edit-btn
         position: absolute
         right: 35px
+        top: 50%
+        transform: translateY(-50%)
+        color: $text-color
+        cursor: pointer
+        transition: .3s ease
+        &:hover
+          color: lighten($text-color, 20%)
+          transition: .3s ease
+      &-share-btn
+        position: absolute
+        right: 65px
         top: 50%
         transform: translateY(-50%)
         color: $text-color

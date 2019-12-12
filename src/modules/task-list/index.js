@@ -10,7 +10,6 @@ import Card from './card';
 
 const TaskList = props => {
   const [taskText, setTaskText] = useState('');
-  
 
   useEffect(() => {
     props.fetchTasksData(props.userId);
@@ -21,14 +20,20 @@ const TaskList = props => {
         <h1 className='task-list__title'>Task list</h1>
         <div className='task-list__search-block'>
           <Icon className='task-list__search-block-icon' type='search' />
-          <input placeholder='search...' />
+          <input placeholder='Search...' />
         </div>
         <ul className='task-list__tasks'>
           {props.tasks &&
-            props.tasks.map((task, taskIndex) => <Card task={task} taskIndex={taskIndex} userId={props.userId} key={taskIndex} />)}
+            props.tasks.map((task, taskIndex) => {
+              if (typeof task == 'object') {
+                return <Card shared={true} task={task.task} from={task.from} taskIndex={taskIndex} userId={props.userId} key={taskIndex} />;
+              } else {
+                return <Card task={task} taskIndex={taskIndex} userId={props.userId} key={taskIndex} />;
+              }
+            })}
         </ul>
         <div className='task-list__add-block'>
-          <input onChange={e => setTaskText(e.target.value)} placeholder='new task...' />
+          <input onChange={e => setTaskText(e.target.value)} placeholder='New task...' />
           <button onClick={() => props.onAddNewTask(props.userId, taskText)}>ADD</button>
         </div>
       </div>

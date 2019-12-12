@@ -1,11 +1,13 @@
-const initialState = {};
+const initialState = {
+  currentTasks: null
+};
 
 export default function taskList (state = initialState, action) {
   switch(action.type) {
     case 'FETCH_TASK_DATA':
       return {
         ...state,
-        currentTasks: action.payload
+        currentTasks: action.tasks
       }
     case 'ADD_TASK':
       return {
@@ -18,7 +20,6 @@ export default function taskList (state = initialState, action) {
         currentTasks: action.tasks
       }
     case 'EDIT_TASK':
-      console.log(action.tasks || 'haha')
       return {
         ...state,
         currentTasks: action.tasks

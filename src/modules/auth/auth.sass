@@ -30,16 +30,24 @@
       flex-direction: column
       margin-bottom: 25px
       position: relative
-      &.required-message:after
-        content: 'This field is required'
-        color: black
+      &.invalid-email::after
+        content: 'Invalid e-mail format'
         font-weight: bold
         font-size: 12px
         color: rgba($error-color, .9)
         position: absolute
         bottom: -18px
         left: 0
-      &.required-message
+      &.required-message:after
+        content: 'This field is required'
+        font-weight: bold
+        font-size: 12px
+        color: rgba($error-color, .9)
+        position: absolute
+        bottom: -18px
+        left: 0
+      &.required-message,
+      &.invalid-email
         input
           border-color: rgba($error-color, .6)
       span
