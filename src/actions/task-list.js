@@ -5,6 +5,7 @@ export const fetchTasksData = userId => {
   const data = localStorage.getItem('users');
   const parsedData = JSON.parse(data);
 
+  console.log(parsedData)
 
   return {
     type: 'FETCH_TASK_DATA',
@@ -12,7 +13,7 @@ export const fetchTasksData = userId => {
       parsedData !== null && parsedData[userId - 1].sharedTasks && !parsedData[userId - 1].tasks
         ? parsedData[userId - 1].sharedTasks
         : parsedData !== null && parsedData[userId - 1].sharedTasks && parsedData[userId - 1].tasks
-        ? parsedData[userId - 1].tasks.concat(parsedData[userId - 1].sharedTasks)
+        ? parsedData[userId - 1].sharedTasks.concat(parsedData[userId - 1].tasks)
         : parsedData !== null
         ? parsedData[userId - 1].tasks
         : []
@@ -22,22 +23,36 @@ export const fetchTasksData = userId => {
 export const onAddNewTask = (userId, taskText) => {
   const state = store.getState();
 
-  let tasks = state.taskList.currentTasks != null ? [...state.taskList.currentTasks] : [];
-  tasks.push(taskText);
+  let tempTasksArr = state.taskList.currentTasks != null ? [...state.taskList.currentTasks] : [];
+  
+  
 
-  // because Redux doesn't love when we change state directly
-  const tempUser = { ...state.auth.users[userId - 1] };
-  tempUser.tasks = tasks;
+  // const sharedTasks = tempTasksArr.filter(task => task.from && task);
+  const tasks = tempTasksArr.filter(task => !task.from && task);
+
 
   const tempUsersArr = [...state.auth.users];
-  tempUsersArr.splice(userId - 1, 1, tempUser);
+
+  const tempUser = { ...state.auth.users[userId - 1] };
+
+
+  tasks.push({ id: tempTasksArr.length > 0 ? tempTasksArr[tempTasksArr.length - 1].id + 1 : 1, label: taskText });
+  tempTasksArr.push({ id: tempTasksArr.length > 0 ? tempTasksArr[tempTasksArr.length - 1].id + 1 : 1, label: taskText });
+
+    tempUser.tasks = tasks;
+    console.log(tempUser)
+    // tempUser.sharedTasks = sharedTasks;
+    tempUsersArr.splice(userId - 1, 1, tempUser);
+  // }
+
+  // because Redux doesn't love when we change state directly
 
   // localStorage.removeItem('users');
   localStorage.setItem('users', JSON.stringify(tempUsersArr));
 
   return {
     type: 'ADD_TASK',
-    tasks: tasks
+    tasks: tempTasksArr
   };
 };
 
@@ -61,28 +76,37 @@ export const onDelTask = (taskIndex, userId) => {
   };
 };
 
-export const onEditTask = (taskIndex, userId, editingTask, setIsEditing) => {
+export const onEditTask = (taskIndex, userId, taskId, editedTask, setIsEditing) => {
   const state = store.getState();
   setIsEditing(false);
 
-  const tempTasksArr = [...state.taskList.currentTasks];
-   
-  
-
-  tempTasksArr.splice(taskIndex, 1, editingTask);
-
-
-
   const data = localStorage.getItem('users');
   const parsedData = JSON.parse(data);
+  const tempTasksArr = [...state.taskList.currentTasks];
 
   const emailOfSourceUser = tempTasksArr[taskIndex].from;
-  const sourceUser = parsedData.filter(user => user.login === emailOfSourceUser)
-  // console.log(sourceUser)
+  let isSharedTask = !!emailOfSourceUser;
+  // if()
+  const sharedTasksEdited = [...parsedData[userId - 1].sharedTasks];
+  if (isSharedTask) {
+    const sourceUser = parsedData.filter(user => user.login === emailOfSourceUser);
+    const sourceUserEditedTasks = isSharedTask && sourceUser[0].tasks.map(task => (task.id === taskId ? { id: task.id, label: editedTask } : task));
+    parsedData[sourceUser[0].id - 1].tasks = sourceUserEditedTasks;
 
+    let sharedEditTaskInd;
+    sharedTasksEdited.forEach((task, index) => sharedEditTaskInd = task.task.id === taskId && index)
+    
+    console.log(sharedEditTaskInd);
+    sharedTasksEdited.splice(sharedEditTaskInd, 1, { from: emailOfSourceUser, task: { id: taskId, label: editedTask } });
+    console.log(sharedTasksEdited);
+    parsedData[userId - 1].sharedTasks = sharedTasksEdited;
+    tempTasksArr.splice(taskIndex, 1, { from: emailOfSourceUser, task: { id: taskId, label: editedTask } });
+  } else {
+    tempTasksArr.splice(taskIndex, 1, { id: taskId, label: editedTask });
+    const ownTasks = tempTasksArr.filter(task => !task.from && task)
+    parsedData[userId - 1].tasks = ownTasks;
+  }
 
-  parsedData[userId - 1].tasks = tempTasksArr;
-  
 
   localStorage.setItem('users', JSON.stringify(parsedData));
 

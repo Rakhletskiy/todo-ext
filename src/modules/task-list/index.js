@@ -25,11 +25,10 @@ const TaskList = props => {
         <ul className='task-list__tasks'>
           {props.tasks &&
             props.tasks.map((task, taskIndex) => {
-              if (typeof task == 'object') {
-                return <Card shared={true} task={task.task} from={task.from} taskIndex={taskIndex} userId={props.userId} key={taskIndex} />;
-              } else {
-                return <Card task={task} taskIndex={taskIndex} userId={props.userId} key={taskIndex} />;
-              }
+              
+                return <Card shared={task.from ? true : false} label={task.from ? task.task.label : task.label} from={task.from || null} taskIndex={taskIndex} userId={props.userId} taskId={task.from ? task.task.id : task.id} key={taskIndex} />;
+              
+                
             })}
         </ul>
         <div className='task-list__add-block'>

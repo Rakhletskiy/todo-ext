@@ -19,7 +19,7 @@ export const onShareTask = (destinationEmail, userId, taskIndex, setDestinationE
   }
 
   if (destinationEmail.length > 0 && isValidEmail && destinationUser.length != 0) {
-    destinationUser[0].sharedTasks.push({ from: parsedData[userId - 1].login, task: [tempTasksArr[taskIndex]] });
+    destinationUser[0].sharedTasks.push({ from: parsedData[userId - 1].login, task: tempTasksArr[taskIndex] });
     parsedData.splice(destinationUser[0].id - 1, 1, destinationUser[0]);
     localStorage.setItem('users', JSON.stringify(parsedData));
     openNotification('Success!', 'Task shared successfully', true);
