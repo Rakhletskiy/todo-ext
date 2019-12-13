@@ -20,13 +20,15 @@ const Card = props => {
         </div>
       ) : (
         <div>
-          {
-            <span>{props.label}</span>
-          }
-          {isSharing && <ShareTaskBlock task={props.task} setIsSharing={setIsSharing} taskIndex={props.taskIndex} userId={props.userId} />}
+          {<span className='task-list__tasks-item-label'>{props.label}</span>}
+          {isSharing && <ShareTaskBlock label={props.label} setIsSharing={setIsSharing} taskIndex={props.taskIndex} userId={props.userId} />}
         </div>
       )}
-      <Icon onClick={() => setIsSharing(!isSharing)} className='task-list__tasks-item-share-btn' type='share-alt' />
+      {props.shared ? (
+        <span className='task-list__tasks-item-shared'>shared</span>
+      ) : (
+        <Icon onClick={() => setIsSharing(!isSharing)} className='task-list__tasks-item-share-btn' type='share-alt' />
+      )}
       <Icon onClick={() => setIsEditing(!isEditing)} className='task-list__tasks-item-edit-btn' type='edit' />
       <Icon onClick={() => props.onDelTask(props.taskIndex, props.userId)} className='task-list__tasks-item-del-btn' type='delete' />
     </li>

@@ -4,7 +4,6 @@
   position: relative
   height: 100%
   padding: 30px 30px 70px
-
 .task-list
   width: 50vw
   height: 80vh
@@ -16,25 +15,6 @@
     text-transform: uppercase
     color: rgba($text-color, .7)
     letter-spacing: 1px
-  &__search-block
-    width: 100%
-    margin-top: 30px
-    position: relative
-    &-icon
-      position: absolute
-      top: 12px
-      left: 12px
-      font-size: 24px
-      color: rgba($text-color, .2)
-    input
-      width: 100%
-      border: 1px solid rgba($main-color, .2)
-      border-radius: 2px
-      padding: 10px 20px 10px 45px
-      font-size: 18px
-      &::placeholder
-        font-size: 16px
-        color: rgba(0,0,0, .3)
   &__tasks
     margin-top: 30px
     width: 100%
@@ -69,5 +49,15 @@
       &:hover
         background-color: $accent-color
         transition: .3s ease
-
+  &__list-btn
+    width: 100%
+    text-align: right
+    font-size: 25px
+    color: $text-color
+    cursor: pointer
+    transition: .3s ease
+    &:hover
+      color: lighten($text-color, 15%)
+      transition: .3s ease
     
+@import '../../_media'

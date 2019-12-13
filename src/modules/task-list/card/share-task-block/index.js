@@ -12,9 +12,9 @@ const ShareTaskBlock = props => {
     <div className='share-block-wrapper'>
       <div className='share-block'>
         <h2>share task</h2>
-        <span>User e-mail for share <span>{props.task}</span> task:</span>
-        <input onChange={e => setDestinationEmail(e.target.value)} value={destinationEmail} autoFocus />
-        <button onClick={() => onShareTask(destinationEmail, props.userId, props.taskIndex, setDestinationEmail, props.setIsSharing)}>SHARE</button>
+        <span>User e-mail for share <span>"{props.label}"</span> task:</span>
+        <input onChange={e => setDestinationEmail(e.target.value)} value={destinationEmail} placeholder='E-mail...' autoFocus />
+        <button onClick={() => onShareTask(destinationEmail, props.userId, props.taskIndex, setDestinationEmail, props.setIsSharing, props.label)}>SHARE</button>
         <Icon onClick={() => props.setIsSharing(false)} className='share-block__close-btn' type='close' />
       </div>
     </div>

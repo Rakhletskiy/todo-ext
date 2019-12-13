@@ -7,9 +7,11 @@ import { onAddNewTask, fetchTasksData } from '../../actions';
 
 import LogOut from './log-out';
 import Card from './card';
+import FullList from './full-list';
 
 const TaskList = props => {
   const [taskText, setTaskText] = useState('');
+  const [isFullList, setIsFullList] = useState(false);
 
   useEffect(() => {
     props.fetchTasksData(props.userId);
@@ -18,25 +20,30 @@ const TaskList = props => {
     <div className='task-list'>
       <div className='task-list-inner'>
         <h1 className='task-list__title'>Task list</h1>
-        <div className='task-list__search-block'>
-          <Icon className='task-list__search-block-icon' type='search' />
-          <input placeholder='Search...' />
-        </div>
+        <Icon onClick={() => setIsFullList(true)} className='task-list__list-btn' type="unordered-list" />
         <ul className='task-list__tasks'>
           {props.tasks &&
             props.tasks.map((task, taskIndex) => {
-              
-                return <Card shared={task.from ? true : false} label={task.from ? task.task.label : task.label} from={task.from || null} taskIndex={taskIndex} userId={props.userId} taskId={task.from ? task.task.id : task.id} key={taskIndex} />;
-              
-                
+              return (
+                <Card
+                  shared={task.from ? true : false}
+                  label={task.from ? task.task.label : task.label}
+                  from={task.from || null}
+                  taskIndex={taskIndex}
+                  userId={props.userId}
+                  taskId={task.from ? task.task.id : task.id}
+                  key={taskIndex}
+                />
+              );
             })}
         </ul>
+        
         <div className='task-list__add-block'>
-          <input onChange={e => setTaskText(e.target.value)} placeholder='New task...' />
-          <button onClick={() => props.onAddNewTask(props.userId, taskText)}>ADD</button>
+          <input onChange={e => setTaskText(e.target.value)} value={taskText} placeholder='New task...' />
+          <button onClick={() => props.onAddNewTask(props.userId, taskText, setTaskText)}>ADD</button>
         </div>
       </div>
-
+      {isFullList && <FullList tasks={props.tasks} setIsFullList={setIsFullList} />}
       <LogOut name={props.name} logOut={props.logOut} />
     </div>
   );
@@ -53,7 +60,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     logOut: () => dispatch({ type: 'LOGOUT_USER' }),
-    onAddNewTask: (userId, taskText) => dispatch(onAddNewTask(userId, taskText)),
+    onAddNewTask: (userId, taskText, setTaskText) => dispatch(onAddNewTask(userId, taskText, setTaskText)),
     fetchTasksData: userId => dispatch(fetchTasksData(userId))
   };
 };
