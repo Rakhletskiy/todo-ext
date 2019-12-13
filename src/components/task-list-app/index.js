@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-
 import './task-list-app.sass';
 
 import Auth from '../../modules/auth';

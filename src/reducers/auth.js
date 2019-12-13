@@ -1,11 +1,17 @@
 const initialState = {
   users: null,
   isAuth: false,
-  currentUser: null
+  currentUser: null,
+  isRegister: false
 };
 
 export default function auth (state = initialState, action) {
   switch(action.type) {
+    case 'SET_IS_REGISTER':
+      return {
+        ...state,
+        isRegister: action.isRegister
+      }
     case 'FETCH_DATA':
       return {
         ...state,
@@ -14,7 +20,8 @@ export default function auth (state = initialState, action) {
     case 'REG_NEW_USER':
       return {
         ...state,
-        users: action.users
+        users: action.users,
+        isRegister: action.isRegister
       }
     case 'LOGIN_USER':
       return {

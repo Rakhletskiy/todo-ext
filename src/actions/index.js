@@ -1,4 +1,4 @@
-import { regNewUser, fetchData, loginUser } from './auth';
+import { regNewUser, fetchData, loginUser, setIsRegister } from './auth';
 import { onAddNewTask, fetchTasksData, onDelTask, onEditTask } from './task-list';
 
 export {
@@ -8,5 +8,6 @@ export {
   onAddNewTask,
   fetchTasksData,
   onDelTask,
-  onEditTask
+  onEditTask,
+  setIsRegister
 }
